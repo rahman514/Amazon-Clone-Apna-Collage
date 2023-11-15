@@ -165,6 +165,10 @@ span{
     background-color: #e2e7e6;
 }
 
+.shopping_section h2{
+    text-align: center;
+}
+
 .box{
     /* border: 2px solid black; */
     height: 400px;
