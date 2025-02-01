@@ -3,212 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
+    <title>Discount Calculator</title>
+    <style>
+        /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #D3D3D3;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        ustify-content: center;
+        align-items: center;
+        height: 100vh;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .container {
+        background-color: #a2bbcf;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode .container {
+        background-color: #444;
+        color: #fff;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        transition: color 0.3s;
+    }
+
+    body.dark-mode h1 {
+        color: #fff;
+    }
+
+    .calculator {
+     margin-bottom: 20px;
+    }
+
+    h2 {
+        /*font-size: 18px;*/
+        text-align: center;
+        color: #555;
+        margin-bottom: 10px;
+        transition: color 0.3s;
+    }
+
+    body.dark-mode h2 {
+        color: #ddd;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+body.dark-mode input {
+    background-color: #555;
+    color: #fff;
+    border-color: #777;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.result {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+body.dark-mode .result {
+    color: #fff;
+}
+
+.mode-toggle {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.mode-toggle button {
+    width: auto;
+    padding: 5px 10px;
+    background-color: #6c757d;
+}
+
+.mode-toggle button:hover {
+    background-color: #5a6268;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.result {
+    animation: fadeIn 0.5s ease-in-out;
+}
+    </style>
+
+
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <!-- For lOGO -->
-            <div class="nav_logo border">
-                <div class="logo"></div>
-            </div>
-
-
-            <!-- For Address -->
-            <div class="nav_add border">
-                <p class="logo_f">Deliver to</p>
-                <div class="add_logo">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <p class="logo_s">Bangladesh</p>
-                </div>
-            </div>
-
-
-            <!-- Search Option -->
-            <div class="nev_search">
-                <select class="search_sele">
-                    <option>All</option>
-                    <option>GG</option>
-                </select>
-                <input placeholder="Search Amazon" class="search_input">
-                <div class="search_icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-            </div>
-
-
-            <!-- Sing in -->
-            <div class="nav_singin border">
-                <p><span>Hello, sign in </span></p>
-                <p class="nav_sec">Account & Lists</p>
-            </div>
-
-
-            <!-- Return -->
-            <div class="nav_return border" >
-                <p><span>Return </span></p>
-                <p class="nav_sec">& Order</p>
-            </div>
-
-            <div class="nav_card border">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Card
-            </div>
-
+    <div class="container">
+        <!-- Dark/Light Mode Toggle -->
+        <div class="mode-toggle">
+            <button id="modeToggle">ডার্ক মোড</button>
         </div>
 
+        <h1>Discount Calculator</h1>
 
-        <!-- For Panel -->
-        <div class="panel">
-            <div class="all border">
-                <i class="fa-solid fa-bars"></i>
-                All
-            </div>   
-            
-            <div class="panel_option">
-                <p class="border">Today's Deals</p>
-                <p class="border">Registry</p>
-                <p class="border">Customer Service</p>
-                <p class="border">Gift Cards</p>
-                <P class="border">Sell</P>
+        <hr>
+
+        <!-- Calculate Discount Percentage -->
+        <div class="calculator">
+            <h2>ডিসকাউন্ট পার্সেন্টেজ </h2>
+            <input type="number" id="totalPurchasePrice" placeholder="ক্রয়মূল্য (Purchase Price)" min="0">
+            <input type="number" id="mrp" placeholder="একটি পণ্যের MRP" min="0">
+            <input type="number" id="quantity1" placeholder="পরিমাণ (Quantity)" min="1">
+            <button onclick="calculateDiscount()">ডিসকাউন্ট পার্সেন্টেজ বের করুন</button>
+            <div class="result" id="discountResult">
+                <span>ডিসকাউন্ট পার্সেন্টেজ: </span>
             </div>
         </div>
-        
-    </header>
-    <div class="hero_section">
-        <div class="hero_message">
-            <p>Amazon.com, Inc. is an American multinational technology company focusing on e-commerce
-                <a>Click here go to Amazon</a>
-            </p>
+
+        <hr>
+
+        <!-- Calculate Purchase Price -->
+        <div class="calculator">
+            <h2>ক্রয়মূল্য </h2>
+            <input type="number" id="mrp2" placeholder="একটি পণ্যের MRP" min="0">
+            <input type="number" id="discountPercentage" placeholder="ডিসকাউন্ট পার্সেন্টেজ (%)" min="0" max="100">
+            <input type="number" id="quantity2" placeholder="পরিমাণ (Quantity)" min="1">
+            <button onclick="calculatePurchasePrice()">ক্রয়মূল্য বের করুন</button>
+            <div class="result" id="purchasePriceResult">
+                <span>ক্রয়মূল্য: </span>
+            </div>
         </div>
     </div>
 
-    <div class="shopping_section">
+    <script>
+        // Dark/Light Mode Toggle
+const modeToggle = document.getElementById('modeToggle');
+const body = document.body;
 
-        <div class="box1 box">
-            <div class="box_content">
-                <h2> Clothing</h2>
-                <div class="box_img" style="background-image: url('box1_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box2 box">
-            <div class="box_content">
-                <h2> Health and Personal Care</h2>
-                <div class="box_img" style="background-image: url('box2_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box3 box">
-            <div class="box_content">
-                <h2> Furniture</h2>
-                <div class="box_img" style="background-image: url('box3_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box4 box">
-            <div class="box_content">
-                <h2> Mobile </h2>
-                <div class="box_img" style="background-image: url('box4_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box1 box">
-            <div class="box_content">
-                <h2>Makeup Items</h2>
-                <div class="box_img" style="background-image: url('box5_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box2 box">
-            <div class="box_content">
-                <h2> Animal</h2>
-                <div class="box_img" style="background-image: url('box6_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box3 box">
-            <div class="box_content">
-                <h2>Drawing Materials</h2>
-                <div class="box_img" style="background-image: url('box7_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
-        <div class="box4 box">
-            <div class="box_content">
-                <h2>Computer</h2>
-                <div class="box_img" style="background-image: url('box8_image.jpg');"></div>
-                <p>See More</p>
-            </div>
-        </div>
+modeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+        modeToggle.textContent = 'লাইট মোড';
+    } else {
+        modeToggle.textContent = 'ডার্ক মোড';
+    }
+});
 
-    </div>
+// Calculate Discount Percentage
+function calculateDiscount() {
+    const totalPurchasePrice = parseFloat(document.getElementById('totalPurchasePrice').value);
+    const mrp = parseFloat(document.getElementById('mrp').value);
+    const quantity1 = parseFloat(document.getElementById('quantity1').value);
 
-    <footer>
+    if (totalPurchasePrice && mrp && mrp > 0 && totalPurchasePrice >= 0 && quantity1 >= 1) {
+        const totalMRP = mrp * quantity1;
+        const discountPercentage = ((totalMRP - totalPurchasePrice) / totalMRP) * 100;
+        document.getElementById('discountResult').innerHTML = `
+            <span>ডিসকাউন্ট পার্সেন্টেজ: ${discountPercentage.toFixed(2)}%</span>
+        `;
+    } else {
+        document.getElementById('discountResult').innerHTML = `
+            <span>অসঠিক ইনপুট! দয়া করে সঠিক মান দিন।</span>
+        `;
+    }
+}
 
-        <div class="foot_panel1">
-            Back to Top
-        </div>
-        
-        <div class="foot_panel2">
-            <ul>
-                <p>Get to Know Us</p>
-                <a>Careers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
-            </ul>
-            <ul>
-                <p>Get to Know Us</p>
-                <a>Careers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
-            </ul>
-            <ul>
-                <p>Get to Know Us</p>
-                <a>Careers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
-            </ul>
-            <ul>
-                <p>Get to Know Us</p>
-                <a>Careers</a>
-                <a>Blog</a>
-                <a>About Amazon</a>
-                <a>Investor Relations</a>
-                <a>Amazon Devices</a>
-                <a>Amazon Science</a>
-            </ul>
-        </div>
+// Calculate Purchase Price
+function calculatePurchasePrice() {
+    const mrp2 = parseFloat(document.getElementById('mrp2').value);
+    const discountPercentage = parseFloat(document.getElementById('discountPercentage').value);
+    const quantity2 = parseFloat(document.getElementById('quantity2').value);
 
-        <div class="foot_panel3">
-            <div class="panel3_logo"></div>
-        </div>
-
-        <div class="foot_panel4">
-            <div class="panel4_1">
-                <a>Conditions of Use</a>
-                <a>Privacy Notice </a>
-                <a>Your Ads Privacy Choices</a>
-            </div>
-
-            <div class="Copyright">
-                © 1996-2023, Amazon.com, Inc. or its affiliates
-            </div>
-        </div>
-
-    </footer>
-
-    <!-- <a href="2nd page.html" target="_blank"> 2nd Page</a> -->
+    if (mrp2 && discountPercentage && discountPercentage >= 0 && discountPercentage <= 100 && mrp2 >= 0 && quantity2 >= 1) {
+        const totalMRP = mrp2 * quantity2;
+        const totalPurchasePrice = totalMRP - (totalMRP * discountPercentage / 100);
+        document.getElementById('purchasePriceResult').innerHTML = `
+            <span>ক্রয়মূল্য: ${totalPurchasePrice.toFixed(2)} টাকা</span>
+        `;
+    } else {
+        document.getElementById('purchasePriceResult').innerHTML = `
+            <span>অসঠিক ইনপুট! দয়া করে সঠিক মান দিন।</span>
+        `;
+    }
+}
+    </script>
 </body>
 </html>
